@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Determining Racism Through Likes</title>
+</head>
+<body>
+    <script>
+        var uid = 0;
+        var groupid = 239444090160654;
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId            : '179422109430160',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v3.0'
+            });
+
+            FB.getLoginStatus(function(response){
+                statusChangeCallback(response);
+            });
+            
+            FB.AppEvents.logPageView();  
+            
+        };
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+        function checkLoginState(){
+            FB.getLoginStatus(function(response){
+                statusChangeCallback(response);
+            });
+        };
+        
+        function statusChangeCallback(response){
+            if(response.status === 'connected'){
+                uid = response.authResponse.userID;
+                var accessToken = response.authResponse.accessToken;
+                console.log("You have sucessfully logged in with UID: " + uid);
+                FB.api('/' + uid, function(response){
+                    console.log(response.name);
+                });
+                
+                FB.api('/' + uid + '/user_gender', 'GET', {}, function(response){
+                    console.log(response);
+                });
+                
+                
+                
+                /*FB.api("/" + groupid + "/Members", function (response) {
+                    console.log(response);
+                });
+                FB.api( '/' + uid + '/friends', 'GET', {}, function(response) {
+                    console.log(response);
+                });*/    
+            }else{
+                console.log("You are not logged in");
+            }
+        };
+
+        function logOut(){
+            FB.logout(function(response){});
+            console.log("User has logged out");
+        }
+        
+
+
+
+
+
+    </script>
+    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
+    <fb:login-button scope="public_profile,email" onlogin="logOut();">Log Out</fb:login-button>
+    <div id="test"></div>
+</body>
+</html>
