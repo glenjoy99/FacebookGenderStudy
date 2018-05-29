@@ -45,16 +45,16 @@
                     console.log(response.name);
                 });
                 
-                FB.api('/' + uid + '/user_gender', 'GET', {}, function(response){
+                /*FB.api('/' + uid + '/user_gender', 'GET', {}, function(response){
+                    console.log(response);
+                });*/
+                
+                
+                
+                FB.api("/" + groupid + "/members", function (response) {
                     console.log(response);
                 });
-                
-                
-                
-                /*FB.api("/" + groupid + "/Members", function (response) {
-                    console.log(response);
-                });
-                FB.api( '/' + uid + '/friends', 'GET', {}, function(response) {
+                /*FB.api( '/' + uid + '/friends', 'GET', {}, function(response) {
                     console.log(response);
                 });*/    
             }else{
